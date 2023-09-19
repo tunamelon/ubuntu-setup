@@ -27,4 +27,9 @@ git clone https://github.com/tunamelon/ubuntu-setup.git
 
 # Change into the cloned directory and run the main install script
 cd ubuntu-setup
+
+# Make scripts executable
+chmod +x *.sh
+
+# Run main install script
 bash main_install.sh
