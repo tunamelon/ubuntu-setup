@@ -64,6 +64,11 @@ make_scripts_executable() {
     echo -e "${GREEN}Scripts made executable successfully.${NC}"
 }
 
+setup_dotfiles() {
+    # Setup dotfiles
+    echo "Set them up here"
+}
+
 install_software() {    
     # Run main install script
     echo -e "${GREEN}Running main install script...${NC}"
@@ -84,10 +89,11 @@ if [ "$EUID" -eq 0 ]; then
     fi
 fi
 
-# Functions run order
+# Logic run order
 update_upgrade_system
 install_git
 make_scripts_dir
 clone_setup_repo
 make_scripts_executable
+bash auth_github.sh
 install_software
