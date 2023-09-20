@@ -5,8 +5,10 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'  # No Color
 
-# Function to check the last command's status
+# Functions
+
 check_status() {
+    # Checks if process failed and prints error
     if [ $? -ne 0 ]; then
         echo -e "${RED}[ERROR] $1${NC}"  # Print the error message passed as the first argument in red
         exit 1
