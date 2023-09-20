@@ -39,7 +39,8 @@ make_scripts_dir() {
 
 clone_setup_repo() {
     # Go to scripts
-    cd ~/scripts &&
+    cd ~/scripts
+    
     # Clone the repository
     echo -e "${GREEN}Cloning the repository...${NC}"
     git clone https://github.com/tunamelon/ubuntu-setup.git
@@ -67,6 +68,7 @@ install_software() {
     bash main_install.sh
     check_status "Failed to run main_install.sh."
     echo -e "${GREEN}Main install script executed successfully.${NC}"
+}
 
 # Main logic #
 
@@ -80,7 +82,7 @@ if [ "$EUID" -eq 0 ]; then
     fi
 fi
 
-# Functions to run in this order
+# Functions run order
 update_upgrade_system
 install_git
 make_scripts_dir
