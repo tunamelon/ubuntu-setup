@@ -14,7 +14,7 @@ check_for_existing_keys() {
 }
 
 generate_ssh_key() {
-    ssh-keygen -t rsa -b 4096 -f ~/.ssh/github_rsa -N "" -C "your_email@example.com"
+    ssh-keygen -t rsa -b 4096 -f ~/.ssh/github_rsa -N "" -C "tuna@sodamelon.com"
 }
 
 display_and_copy_key() {
