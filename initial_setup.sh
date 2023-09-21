@@ -97,3 +97,7 @@ clone_setup_repo
 make_scripts_executable
 bash auth_github.sh
 install_software
+bash restore_dotfiles.sh
+bash systemd_dotfiles_setup.sh
+
+echo -e "${GREEN}System setup complete${NC}"
