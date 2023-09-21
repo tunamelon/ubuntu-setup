@@ -7,28 +7,40 @@ REPO="git@github.com:tunamelon/ubuntu-dotfiles.git"
 # Install stow
 sudo apt install -y stow
 
-# Create the dotfiles directory and cd into it
-mkdir -p $DOTFILES_DIR
+# Check if dotfiles directory exists
+if [ ! -d "$DOTFILES_DIR" ]; then
+    # If not, clone the repo into the dotfiles directory
+    git clone $REPO $DOTFILES_DIR
+else
+    # If exists, pull latest changes
+    cd $DOTFILES_DIR
+    git pull
+fi
+
+# Navigate to dotfiles directory
 cd $DOTFILES_DIR
 
-# Clone the repo into the dotfiles directory
-git clone $REPO .
-
-# Copy initial files
-cp $HOME/.bashrc bash/
-cp $HOME/.gitconfig git/
-cp $HOME/.vimrc vim/
+# Copy initial files if they exist
+[[ -f $HOME/.bashrc ]] && cp -u $HOME/.bashrc bash/
+[[ -f $HOME/.gitconfig ]] && cp -u $HOME/.gitconfig git/
+[[ -f $HOME/.vimrc ]] && cp -u $HOME/.vimrc vim/
 
 # For VS Code
-mkdir -p vscode
-cp $HOME/.config/Code/User/settings.json vscode/
+[[ -f $HOME/.config/Code/User/settings.json ]] && mkdir -p vscode && cp -u $HOME/.config/Code/User/settings.json vscode/
 
 # Use stow to create symlinks
-stow bash vscode git vim
+[ -d "bash" ] && stow bash
+[ -d "vim" ] && stow vim
+[ -d "git" ] && stow git
+[ -d "vscode" ] && stow vscode
 
 # Git setup
-git add .
-git commit -m "Initial commit of dotfiles"
-git push
+if [ -n "$(git status --porcelain)" ]; then
+    git add .
+    git commit -m "Update dotfiles"
+    git push
+else
+    echo "No changes to commit"
+fi
 
 echo "Dotfiles setup and pushed to GitHub."
