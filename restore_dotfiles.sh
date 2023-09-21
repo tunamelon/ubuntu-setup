@@ -2,7 +2,7 @@
 
 # Variables
 DOTFILES_DIR="$HOME/dotfiles"
-REPO="https://github.com/tunamelon/ubuntu-dotfiles"
+REPO="git@github.com:tunamelon/ubuntu-dotfiles.git"
 
 # Clone the repository
 if [[ ! -d $DOTFILES_DIR ]]; then
