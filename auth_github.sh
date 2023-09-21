@@ -39,6 +39,8 @@ test_github_connection() {
 }
 
 setup_me() {
+    git remote add origin git@github.com:tunamelon/ubuntu-setup.git
+
     git config --global user.email "tuna@sodamelon.com"
     git config --global user.name "Tuna"
     git config --global init.defaultBranch main
