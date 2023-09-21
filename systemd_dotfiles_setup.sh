@@ -4,7 +4,7 @@
 USER_SYSTEMD_DIR="$HOME/.config/systemd/user/"
 SERVICE_PATH="${USER_SYSTEMD_DIR}dotfiles_backup.service"
 TIMER_PATH="${USER_SYSTEMD_DIR}dotfiles_backup.timer"
-SCRIPT_PATH="$HOME/scripts/backup_dotfiles.sh"  # Absolute path to your script
+SCRIPT_PATH="$HOME/scripts/ubuntu-setup/backup_dotfiles.sh"  # Updated path to your script
 
 setup_service_and_timer() {
     # Ensure backup script is executable
