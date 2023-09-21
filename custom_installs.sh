@@ -18,12 +18,7 @@ check_status() {
 install_vscode() {
     echo "Installing Microsoft VS Code..."
 
-    wget -q https://packages.microsoft.com/keys/microsoft.asc -O microsoft.gpg
-    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/
-    sudo add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-
-    sudo apt update
-    sudo apt install -y code
+    sudo snap install code --classic
 
     check_status "Microsoft VS Code"
 }

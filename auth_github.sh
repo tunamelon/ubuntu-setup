@@ -38,6 +38,12 @@ test_github_connection() {
     ssh -T git@github.com -o IdentitiesOnly=yes -i ~/.ssh/github_rsa 2>&1 | grep "You've successfully authenticated"
 }
 
+setup_me() {
+    git config --global user.email "tuna@sodamelon.com"
+    git config --global user.name "Tuna"
+    git config --global init.defaultBranch main
+}
+
 main_logic() {
     if check_for_existing_keys; then
         echo "GitHub SSH key found."
@@ -57,6 +63,7 @@ main_logic() {
     if ! test_github_connection; then
         echo -e "${RED}Failed to authenticate with GitHub. Please ensure you've added the key correctly.${NC}"
     else
+        setup_me
         echo -e "${GREEN}Successfully authenticated with GitHub.${NC}"
     fi
 }
