@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Variables
 DOTFILES_DIR="$HOME/dotfiles"
 REPO="git@github.com:tunamelon/ubuntu-dotfiles.git"
@@ -7,35 +5,55 @@ REPO="git@github.com:tunamelon/ubuntu-dotfiles.git"
 # Install stow
 sudo apt install -y stow
 
-# Set up the dotfiles directory and navigate to it
+# Create the dotfiles directory and cd into it
 mkdir -p $DOTFILES_DIR
 cd $DOTFILES_DIR
 
-# Check if git is initialized in the directory
+# Clone the repo into the dotfiles directory
 if [ ! -d ".git" ]; then
-    # Initialize git, add remote, and create the main branch
-    git init
-    git remote add origin $REPO
-    git checkout -b main
+    git clone $REPO .
 fi
 
-# Create the necessary directories, only if they don't already exist
-for dir in bash git vim vscode; do
-    mkdir -p $dir
-done
+# Function to backup and stow
+backup_and_stow() {
+    local dir_name=$1
+    local file_name=$2
 
-# Copy initial files if they exist
-[[ -f $HOME/.bashrc ]] && cp -u $HOME/.bashrc bash/
-[[ -f $HOME/.gitconfig ]] && cp -u $HOME/.gitconfig git/
-[[ -f $HOME/.vimrc ]] && cp -u $HOME/.vimrc vim/
-[[ -f $HOME/.config/Code/User/settings.json ]] && cp -u $HOME/.config/Code/User/settings.json vscode/
+    # If the file exists and is NOT a symbolic link, back it up
+    if [ -e "$HOME/$file_name" ] && [ ! -L "$HOME/$file_name" ]; then
+        mv "$HOME/$file_name" "$HOME/$file_name.bak"
+    fi
 
-# Use stow to create symlinks
-stow bash vim git vscode
+    # Create the directory if it doesn't exist
+    mkdir -p "$DOTFILES_DIR/$dir_name"
+
+    # Copy the file if it doesn't exist in the dotfiles directory
+    if [ ! -e "$DOTFILES_DIR/$dir_name/$file_name" ]; then
+        cp "$HOME/$file_name" "$DOTFILES_DIR/$dir_name/"
+    fi
+
+    # Stow the directory
+    stow --restow $dir_name
+}
+
+backup_and_stow bash .bashrc
+backup_and_stow git .gitconfig
+
+# If .vimrc exists, do the same for vim
+if [ -e "$HOME/.vimrc" ]; then
+    backup_and_stow vim .vimrc
+fi
+
+# If VS Code settings exist, do the same for vscode
+if [ -e "$HOME/.config/Code/User/settings.json" ]; then
+    mkdir -p "$DOTFILES_DIR/vscode"
+    cp -r "$HOME/.config/Code/User/" "$DOTFILES_DIR/vscode/"
+    stow --restow vscode
+fi
 
 # Git setup
 git add .
 git commit -m "Initial commit of dotfiles"
-git push -u origin main
+git push origin main
 
 echo "Dotfiles setup and pushed to GitHub."
