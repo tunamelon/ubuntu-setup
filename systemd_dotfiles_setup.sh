@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# Define paths for service and timer for the user 'tuna'
+# Define paths for service and timer
 USER_SYSTEMD_DIR="$HOME/.config/systemd/user/"
 SERVICE_PATH="${USER_SYSTEMD_DIR}dotfiles_backup.service"
 TIMER_PATH="${USER_SYSTEMD_DIR}dotfiles_backup.timer"
+SCRIPT_PATH="$HOME/scripts/backup_dotfiles.sh"  # Absolute path to your script
 
 setup_service_and_timer() {
-    # Ensure the directory exists
-    mkdir -p $USER_SYSTEMD_DIR
-
     # Ensure backup script is executable
-    chmod +x $(pwd)/backup_dotfiles.sh
+    chmod +x $SCRIPT_PATH
 
     # Create the service file
     cat > $SERVICE_PATH <<EOL
@@ -19,7 +17,7 @@ Description=Backup dotfiles
 
 [Service]
 Type=oneshot
-ExecStart=$(pwd)/backup_dotfiles.sh
+ExecStart=$SCRIPT_PATH
 EOL
 
     # Create the timer file
@@ -32,29 +30,29 @@ OnCalendar=daily
 Persistent=true
 
 [Install]
-WantedBy=timers.target
+WantedBy=default.target
 EOL
 
-    # Reload systemd to recognize the new service and timer for the user
+    # Reload systemd to recognize the new service and timer
     systemctl --user daemon-reload
 
     # Enable and start the timer
     systemctl --user enable dotfiles_backup.timer
     systemctl --user start dotfiles_backup.timer
 
-    echo "Dotfiles backup service and timer setup completed for user."
+    echo "Dotfiles backup service and timer setup completed."
 }
 
 # Check if service and timer exist
 if [[ -f $SERVICE_PATH && -f $TIMER_PATH ]]; then
-    echo "Service and timer files exist for user."
+    echo "Service and timer files exist."
 
     # Check if the service and timer are working
     if systemctl --user is-active --quiet dotfiles_backup.timer; then
-        echo "Service and timer are active and working for user. Exiting."
+        echo "Service and timer are active and working. Exiting."
         exit 0
     else
-        read -p "Service and timer are not working. Do you want to reinstall them for user? (y/n): " choice
+        read -p "Service and timer are not working. Do you want to reinstall them? (y/n): " choice
         if [[ $choice == 'y' || $choice == 'Y' ]]; then
             setup_service_and_timer
         else
@@ -63,6 +61,6 @@ if [[ -f $SERVICE_PATH && -f $TIMER_PATH ]]; then
         fi
     fi
 else
-    echo "Service and timer files do not exist for user. Setting them up now."
+    echo "Service and timer files do not exist. Setting them up now."
     setup_service_and_timer
 fi
