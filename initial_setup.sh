@@ -102,6 +102,6 @@ clone_setup_repo
 make_scripts_executable
 bash auth_github.sh
 install_software
-bash sudo setup_ssh.sh
+bash sudo ssh_setup.sh
 
 echo -e "${GREEN}System setup complete${NC}"
