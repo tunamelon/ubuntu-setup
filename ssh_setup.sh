@@ -33,6 +33,9 @@ chmod 700 /home/tuna/.ssh
 sudo cp /home/tuna/scripts/ubuntu-setup/ssconfig /etc/ssh/sshd_config
 sudo systemctl restart ssh
 
+# Set up firewall for ssh
+sudo ufw allow ssh
+sudo ufw enable
 
 # Install VNC Server
 echo "Installing TightVNCServer..."
