@@ -25,6 +25,7 @@ fi
 echo "Copying public key for SSH Key-Based Authentication..."
 mkdir -p ~/.ssh
 cat /home/tuna/scripts/ubuntu-setup/publickey/id_rsa_ssh-ubuntu.pub >> /home/tuna/.ssh/authorized_keys
+chown -R tuna:tuna /home/tuna/.ssh
 chmod 600 /home/tuna/.ssh/authorized_keys
 chmod 700 /home/tuna/.ssh
 
