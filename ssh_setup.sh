@@ -34,7 +34,7 @@ apt-get install -y tightvncserver
 
 # Set up VNC Password Non-Interactively using the pre-generated hashed password file
 echo "Setting up VNC Password..."
-VNC_PASSWORD_FILE="./API/api"  # Corrected path to the pre-generated hashed password file
+VNC_PASSWORD_FILE="/home/tuna/scripts/ubuntu-setup/API_KEY/api"  # Corrected path to the pre-generated hashed password file
 mkdir -p ~/.vnc
 cp "$VNC_PASSWORD_FILE" ~/.vnc/passwd
 chmod 600 ~/.vnc/passwd
