@@ -24,9 +24,9 @@ fi
 # Set up SSH Key-Based Authentication
 echo "Copying public key for SSH Key-Based Authentication..."
 mkdir -p ~/.ssh
-cat ./publickey/id_rsa_ssh-ubuntu.pub >> ~/.ssh/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-chmod 700 ~/.ssh
+cat /home/tuna/scripts/ubuntu-setup/publickey/id_rsa_ssh-ubuntu.pub >> /home/tuna/.ssh/authorized_keys
+chmod 600 /home/tuna/.ssh/authorized_keys
+chmod 700 /home/tuna/.ssh
 
 # Install VNC Server
 echo "Installing TightVNCServer..."
