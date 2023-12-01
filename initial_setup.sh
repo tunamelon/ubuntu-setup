@@ -54,6 +54,8 @@ clone_setup_repo() {
     cd ubuntu-setup
     check_status "Failed to change to the ubuntu-setup directory."
     echo -e "${GREEN}Successfully changed to ubuntu-setup directory.${NC}"
+    git remote set-url origin git@github.com:tunamelon/ubuntu-setup.git
+
 }
 
 make_scripts_executable() {    
