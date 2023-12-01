@@ -14,7 +14,12 @@ apt-get install -y openssh-server
 echo "Ensuring SSH service is running..."
 systemctl start ssh
 systemctl enable ssh
-systemctl status ssh
+if systemctl is-active --quiet ssh; then
+    echo "SSH service is running."
+else
+    echo "SSH service is not running. Exiting script."
+    exit 1
+fi
 
 # Set up SSH Key-Based Authentication
 echo "Copying public key for SSH Key-Based Authentication..."
