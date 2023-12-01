@@ -91,6 +91,9 @@ fi
 
 # Logic run order
 update_upgrade_system
+# Initiates Ubuntu pro for live updates
+sudo pro attach C12JSPs8qUmhfBr1HxN2dSnCAFxJvP
+
 install_git
 make_scripts_dir
 clone_setup_repo
