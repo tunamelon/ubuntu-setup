@@ -23,8 +23,16 @@ install_vscode() {
     check_status "Microsoft VS Code"
 }
 
+# Function to install Bitwarden
+install_bitwarden() {
+    echo "Installing Bitwarden..."
+
+    sudo snap install bitwarden --classic
+
+    check_status "bitwarden"
+}
+
 
 # Call the installation functions
 install_vscode
-
-# For future custom installations, you can add more functions like install_vscode above and then call them at the bottom.
+install_bitwarden
