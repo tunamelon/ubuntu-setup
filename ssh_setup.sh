@@ -28,6 +28,11 @@ cat /home/tuna/scripts/ubuntu-setup/publickey/id_rsa_ssh-ubuntu.pub >> /home/tun
 chmod 600 /home/tuna/.ssh/authorized_keys
 chmod 700 /home/tuna/.ssh
 
+# Set up SSH Config
+sudo cp /home/tuna/scripts/ubuntu-setup/ssconfig /etc/ssh/sshd_config
+sudo systemctl restart ssh
+
+
 # Install VNC Server
 echo "Installing TightVNCServer..."
 apt-get install -y tightvncserver
